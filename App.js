@@ -25,13 +25,19 @@ import chatRtdb from './src/screens/chatRtdb';
 import PushNote from './src/screens/pushNotification';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import auth from '@react-native-firebase/auth';
 
 const Stack= createStackNavigator();
 const App = ()=> {
+  // console.log(auth().currentUser);
+  let ini = "Home"
+  if (auth().currentUser){
+    ini="Menu"
+  }
   return (
     <Fragment>
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{
+      <Stack.Navigator initialRouteName={ini} screenOptions={{
     headerShown: false
   }}>
         <Stack.Screen name="Home" component={HomeScreen} />

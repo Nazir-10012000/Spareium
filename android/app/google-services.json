@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1001365048129",
+    "firebase_url": "https://spareium-123-default-rtdb.firebaseio.com",
+    "project_id": "spareium-123",
+    "storage_bucket": "spareium-123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001365048129:android:d3661878c1f42d4a8defc0",
+        "android_client_info": {
+          "package_name": "com.spareium"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001365048129-d19isfjiolnpq9nli2ebeik7t27ksp80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbJvyyj3a21unearQPMPiII356gIc7n54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001365048129-d19isfjiolnpq9nli2ebeik7t27ksp80.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1001365048129-3fbi07qpk2r4fqhteadnom9clmnpbjo3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.spareium"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
