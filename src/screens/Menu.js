@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, ImageBackground, Image,Text} from 'react-native';
 import {Avatar} from 'react-native-elements';
 import Styles from '../Stylesheet/Styles';
@@ -10,45 +10,86 @@ import settings from '../screens/Menu/settings';
 import { createDrawerNavigator, DrawerItem, DrawerContentScrollView} from
  '@react-navigation/drawer';
  import auth from '@react-native-firebase/auth';
-
+import PushNotification from 'react-native-push-notification';
 // import firebase from '@react-native-firebase/app';
 import {firebase} from '@react-native-firebase/firestore';
-
-
-
-
+import  database from '@react-native-firebase/database';
+import messaging from '@react-native-firebase/messaging';
 
 const WIDTH = (Dimensions.get('window').width) / 375;
 const HEIGHT = (Dimensions.get('window').height) / 812;
 const Drawer = createDrawerNavigator();
 
 const DrawerContent=({navigation}) => {
+  const activeUserEmail =auth().currentUser.email;
+  const [messages, setMessages] = useState([]);
 
-  // const usersCollection = firebase.firestore()
+  useEffect(() => {
+    const subscriber = database()
+        .ref('/chat')
+        .on('value', snapshot => {
+            const user = [];
+            snapshot.forEach(childSnapshot => {
+
+                if (activeUserEmail == childSnapshot.val().recieverUid) {
+                    
+                        user.push({
+                            ...childSnapshot.val(),
+                            key: childSnapshot.id,
+
+                        });
+                    
+                }
+                
+            });
+            
+        
+    setMessages(user);
+  
+});
+// Unsubscribe from events when no longer in use
+return () => subscriber();
+}, []);
+
+var l =messages.length;
+console.log(messages[l -1],"length", l);
+const a =l;
+
+  // PushNotification.localNotification({
+  //   channelId:'spareium-123',
+  //   title:'hello',
+  //   message: "Spareium",
+  // });
+  
+  //  const usersCollection = firebase.firestore()
   // .collection('spareium-123')
   // .doc('users')
   // .get();
+// useEffect( () => {
+//   if (messages.length == a + 1){
+//     console.log("hii");
+//   }
+// });
+firebase.messaging().onMessage(message => {
+  console.log('Received a message');
+});
   function getUserName(documentSnapshot) {
     return documentSnapshot.get('name');
   }
-
+-
 firebase.firestore()
 .collection('spareium-123')
 .doc('users')
 .collection('spareiumUsers')
-.doc(auth().currentUser.uid) 
+.doc(auth().currentUser.uid)
 .get()
 .then(documentSnapshot => getUserName(documentSnapshot))
   .then(name => {
     firebase.auth().currentUser.updateProfile({
       displayName: name,
-    })
-     
+    }) 
   });
-
-
-
-
+  
   return (
 
     <DrawerContentScrollView >
@@ -81,9 +122,9 @@ firebase.firestore()
           <ImageBackground style={{ flex: 1, flexDirection: 'row', height: HEIGHT * 80, width: WIDTH * 260, marginTop: HEIGHT * 39 }}
             source={require('../img/orangeRectangle.png')}>
             <ImageBackground source={require('../img/oRectangle.png')}
-              style={{ height: HEIGHT * 60, width: WIDTH * 70 }}>
+              style={{ height: HEIGHT * 60, width: WIDTH * 70,justifyContent:'center',alignItems:'center' }}>
               <Image source={require('../img/car.png')}
-                style={{ height: HEIGHT * 28, width: WIDTH * 30, marginTop: HEIGHT * 16, marginLeft: WIDTH * 19 }}>
+                style={{ height: HEIGHT * 28, width: WIDTH * 30,resizeMode:'contain'}}>
 
               </Image>
 
@@ -99,9 +140,9 @@ firebase.firestore()
           <ImageBackground style={{ flex: 1, flexDirection: 'row', height: HEIGHT * 80, width: WIDTH * 260 }}
             source={require('../img/greenRectangle.png')}>
             <ImageBackground source={require('../img/gRectangle.png')}
-              style={{ height: HEIGHT * 60, width: WIDTH * 70 }}>
+              style={{ height: HEIGHT * 60, width: WIDTH * 70 ,justifyContent:'center',alignItems:'center'}}>
               <Image source={require('../img/interface.png')}
-                style={{ height: HEIGHT * 24, width: WIDTH * 24, marginTop: HEIGHT * 18, marginLeft: WIDTH * 20 }}>
+                style={{ height: HEIGHT * 24, width: WIDTH * 24,resizeMode:'contain'}}>
 
               </Image>
             </ImageBackground>

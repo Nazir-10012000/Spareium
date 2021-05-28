@@ -1,8 +1,9 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, Dimensions, ImageBackground } from 'react-native';
 import Styles from '../../Stylesheet/Styles';
 import {Avatar,Switch} from 'react-native-elements';
-import auth from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 const WIDTH = (Dimensions.get('window').width) / 375;
 const HEIGHT = (Dimensions.get('window').height) / 812;
 
@@ -13,7 +14,37 @@ const settings = ({ navigation }) => {
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const [isEnabled1, setIsEnabled1] = useState(false);
   const toggleSwitch1 = () => setIsEnabled1(previousState => !previousState);
+  const [loc,setLoc] = useState('');
+  useEffect(() => {
+  const a = firestore()
+  .collection('spareium-123')
+  .doc('users')
+  .collection('spareiumUsers')
+  .doc(auth().currentUser.uid)
+  .get()
+.then(documentSnapshot => {
 
+//   console.log('User data: ', documentSnapshot.data());
+setLoc(documentSnapshot.data().location);
+console.log(loc);
+
+})
+return () => a();
+  }, []);
+// function getUserName(documentSnapshot) {
+//     return documentSnapshot.get('location');
+//   }
+// firebase.firestore()
+// .collection('spareium-123')
+// .doc('users')
+// .collection('spareiumUsers')
+// .doc(auth().currentUser.uid) 
+// .get()
+// .then(documentSnapshot => getUserName(documentSnapshot))
+//   .then(name => {
+//     setLoc(name)
+//     });
+   
     return (
         <View style={Styles.settingsbody}>
             <View style={Styles.header}>
@@ -66,7 +97,7 @@ const settings = ({ navigation }) => {
                         <Image source={require('../../img/location.png')} 
                             style={{ height:HEIGHT*22.5,width:WIDTH*15.7,resizeMode:'contain'}}
                             />
-                        <Text style={Styles.city}>New York City</Text>
+                        <Text style={Styles.city}>{loc}</Text>
                     </View>
                 </View>
                 <View style={{
@@ -89,7 +120,7 @@ const settings = ({ navigation }) => {
                     <Text style={{fontSize:HEIGHT*17, fontWeight:'600',
                           color:'rgb(74,74,74)', letterSpacing:WIDTH*0.47,  
                         }}>Change Password</Text>
-                        <TouchableOpacity onPress={()=>{}}>
+                        <TouchableOpacity onPress={()=>navigation.navigate('ChangePassword')}>
                     <Image 
                         source={require('../../img/carret.png')} 
                         style={{ height:HEIGHT*11,width:WIDTH*16,resizeMode:'contain'}}

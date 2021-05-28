@@ -378,6 +378,16 @@ const Styles = StyleSheet.create({
         marginLeft:WIDTH*99
         
     },
+    cp:{
+        fontSize:HEIGHT*19,
+        // lineHeight:HEIGHT*27,
+        color:'rgb(74,74,74)',
+        letterSpacing:WIDTH*1,
+        // alignSelf:'center',
+        fontWeight:'700',
+        marginLeft:WIDTH*90
+        
+    },
     displayName:{
         fontSize:HEIGHT*21,
         letterSpacing:WIDTH*0.58,

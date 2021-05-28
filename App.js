@@ -21,7 +21,7 @@ import usersRtdb from'./src/screens/usersRtdb';
 import users from './src/screens/users';
 import chatScreen from './src/screens/chat';
 import chatRtdb from './src/screens/chatRtdb';
-
+import ChangePassword from './src/screens/changePass';
 import PushNote from './src/screens/pushNotification';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -59,6 +59,7 @@ const App = ()=> {
          <Stack.Screen name ="chatRtdb" component ={chatRtdb} />
          <Stack.Screen name='Workspace' component={workspace} />
          <Stack.Screen name='EditProfile' component={EditProfile} />
+         <Stack.Screen name='ChangePassword' component={ChangePassword} />
       </Stack.Navigator>
       
     </NavigationContainer>

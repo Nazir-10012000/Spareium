@@ -76,6 +76,7 @@ const SignupScreen = ({ navigation }) => {
                                     email: email,
                                     name: name,
                                     password: password,
+                                    location:'',
                                 })
                                 .then(() => {
                                     console.log('User added to fireStore!');

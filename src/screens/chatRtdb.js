@@ -94,6 +94,10 @@ const sendMsg = () => {
             })
             .then(() => console.log('massege set to database.'));
 
+            firebase.messaging().sendMessage({
+                MSG:text,
+              });
+
     }
 }
 return (
