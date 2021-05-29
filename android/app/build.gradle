@@ -205,7 +205,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-database'
-
+    implementation 'com.google.firebase:firebase-storage'
+    
     implementation 'com.facebook.react:react-native:+'  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"

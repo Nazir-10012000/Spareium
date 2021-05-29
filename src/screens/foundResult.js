@@ -3,10 +3,11 @@ import { View, Text,FlatList, TouchableOpacity, ImageBackground, Dimensions, Ima
   from 'react-native';
 import Styles from '../Stylesheet/Styles';
 import noResults from './noResult';
-
+import store from '../store';
+import {connect} from 'react-redux';
 const WIDTH = (Dimensions.get('window').width) / 375;
 const HEIGHT = (Dimensions.get('window').height) / 812;
-
+// console.log(store.getState());
 const DATA=[
     {
       vin:'380183',
@@ -110,14 +111,14 @@ const DATA=[
   );
 
     
-const foundResult =({ route , navigation }) =>{
+const foundResult =({ navigation },state) =>{
   const [selected,setSelected]=useState('null');
-  var { oem } = route.params;
- 
+  const oem= store.getState();
+ const search=oem.oem.oem;
   function res(vin){
      
       // vin.vin = oem ? vin.vin :'';
-      return vin.vin.indexOf(oem) > -1;
+      return vin.vin.indexOf(search) > -1;
          
       
    
@@ -168,4 +169,5 @@ let DATA2 =DATA.filter(res);
       );
     
 }
-export default foundResult;
+
+export default connect(null)(foundResult);

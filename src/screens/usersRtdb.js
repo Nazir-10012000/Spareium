@@ -44,8 +44,9 @@ const usersRtdb = ({ navigation }) => {
 
 
     if (loading) {
-        return <ActivityIndicator 
+        return <ActivityIndicator
             style={{ backgroundColor:'white',flex:1,}}
+            size={'large'}
         />;
     }
     const Item = ({ item,}) => (

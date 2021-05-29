@@ -6,10 +6,12 @@ import auth, {firebase} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 const WIDTH = (Dimensions.get('window').width) / 375;
 const HEIGHT = (Dimensions.get('window').height) / 812;
-
+import store from '../../store';
+import {NOTIFICATION1} from '../../actions';
+import { connect } from 'react-redux';
 const settings = ({ navigation }) => {
     const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const toggleSwitch = () => {setIsEnabled(previousState => !previousState); store.dispatch(NOTIFICATION1)}
   const [isEnabled2, setIsEnabled2] = useState(false);
   const toggleSwitch2 = () => setIsEnabled2(previousState => !previousState);
   const [isEnabled1, setIsEnabled1] = useState(false);
@@ -23,28 +25,12 @@ const settings = ({ navigation }) => {
   .doc(auth().currentUser.uid)
   .get()
 .then(documentSnapshot => {
-
-//   console.log('User data: ', documentSnapshot.data());
 setLoc(documentSnapshot.data().location);
 console.log(loc);
 
 })
 return () => a();
   }, []);
-// function getUserName(documentSnapshot) {
-//     return documentSnapshot.get('location');
-//   }
-// firebase.firestore()
-// .collection('spareium-123')
-// .doc('users')
-// .collection('spareiumUsers')
-// .doc(auth().currentUser.uid) 
-// .get()
-// .then(documentSnapshot => getUserName(documentSnapshot))
-//   .then(name => {
-//     setLoc(name)
-//     });
-   
     return (
         <View style={Styles.settingsbody}>
             <View style={Styles.header}>
@@ -153,7 +139,6 @@ return () => a();
                         <Switch
         trackColor={{ false: "rgba(0,0,0,0.1)", true: "rgb(6,217,100)" }}
         thumbColor="white"
-        // ios_backgroundColor="blue"
         onValueChange={toggleSwitch}
         value={isEnabled}
       />
@@ -165,12 +150,11 @@ return () => a();
                 }}>
                     <Text style={{fontSize:HEIGHT*17, fontWeight:'600',
                           color:'rgb(74,74,74)', letterSpacing:WIDTH*0.47,  
-                        }}>Arebic Version</Text>
+                        }}>Arabic Version</Text>
                         <Switch
                          disabled
         trackColor={{ false: "rgba(0,0,0,0.1)", true: "rgb(6,217,100)" }}
         thumbColor="white"
-        // ios_backgroundColor="blue"
         onValueChange={toggleSwitch1}
         value={isEnabled1}
       />
@@ -186,7 +170,6 @@ return () => a();
                         <Switch
         trackColor={{ false: "rgba(0,0,0,0.1)", true: "rgb(6,217,100)" }}
         thumbColor="white"
-        // ios_backgroundColor="blue"
         onValueChange={toggleSwitch2}
         value={isEnabled2}
       />
@@ -195,4 +178,4 @@ return () => a();
         </View>
     );
 };
-export default settings;
+export default connect(null,{NOTIFICATION1})(settings);

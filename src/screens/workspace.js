@@ -1,7 +1,24 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { INCREAMENT1,DECREAMENT1 } from '../actions';
+import store from '../store'
 const workspace = ({navigation}) => {
     const goBack= '<  Go Back.'
+   
+    store.dispatch(INCREAMENT1);
+    store.dispatch(function (dispatch,getState) {
+        // ... which themselves may dispatch many times
+        dispatch(INCREAMENT1)
+        dispatch(INCREAMENT1)
+        dispatch(INCREAMENT1)
+        const as =getState();
+      console.log(as,"asdfsd");
+        setTimeout(() => {
+          // ... even asynchronously!
+          dispatch(DECREAMENT1)
+        }, 1000)
+      })
+    // store.dispatch(incremented())
     return (
         <View style= {{ justifyContent:'center', alignItems:'center',backgroundColor:'white',flex:1}}>
             
@@ -17,7 +34,7 @@ const workspace = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity 
             onPress={()=>navigation.navigate('users')}
-            style={{ 
+            style={{
                 justifyContent:'center',height:35,backgroundColor:'red',flex:0.4,
                width:'100%',alignItems:'center'
             }}>
